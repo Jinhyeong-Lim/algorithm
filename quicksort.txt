@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a[21];
+
+int partition(int a[], int p, int r)
+{
+		int x=a[p];
+		int i=p, j=r;
+	
+			while (i < j)
+			{ 
+				while (x < a[j])
+				 { 
+				 	j--; 
+				 } 
+				 
+				while (i < j && x >= a[i])
+				 {
+				  		i++;
+				 } 
+					
+				int tmp=a[i];
+				a[i]=a[j];
+				a[j]=tmp;		 
+				  
+	     	 }
+
+			
+		a[p] = a[i];
+	   	a[i] = x;
+	    return i;
+
+}
+
+
+void quicksort(int a[], int p, int r)
+{
+	if(p<r)
+	{
+		int q=partition(a,p,r);
+		quicksort(a,p,q-1);
+		quicksort(a,q+1,r);
+	}
+}
+
+
+int main()
+{
+	
+	int n;
+	scanf("%d", &n);
+	
+	for(int i=0;i<n;i++)
+	{
+		a[i]=rand()%5000;
+		printf("%d ", a[i]);
+	}
+	printf("\n");
+	int p=0,r=19;
+	
+	quicksort(a,p,r);
+	for(int i=0;i<n;i++)
+		printf("%d ", a[i]);
+	
+	
+	return 0;
+}
