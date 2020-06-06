@@ -1,0 +1,94 @@
+#include<iostream>
+using namespace std;
+int cost[9][9];
+bool found[9];
+int dist[9]; 
+#define mx 987654321 
+
+int s,e,n,m; // 시작점 도착점  ,원소 개수,  행의 개수 
+
+
+int extractMin(int n)
+ {
+	int min = mx, minpos = -1;
+	for(int i=0; i<n; i++) 
+	{
+		if(!found[i] && dist[i] < min)
+		{
+			min = dist[i]; minpos = i; 
+		}
+	}
+	return minpos;
+}
+
+
+void dijkstra(int v)//시작점 
+{
+	
+	for(int i=0;i<n;i++)
+	{
+		found[i]=false;
+		dist[i]=cost[v][i]; 
+	}
+	found[v]=true;
+	
+	for(int i=0;i<n-2;i++)
+	{
+			
+		int u=extractMin(n);
+		found[u]=true;
+		
+	 for(int w=0;w<n;w++)
+	 {
+	 	if(!found[w])
+	 	{
+	 		if(dist[w]>dist[u]+cost[u][w]) dist[w]=dist[u]+cost[u][w];
+		 }
+	 }
+	}
+
+}
+
+int main()
+{
+	
+	cin >> s >> e >> n >> m;
+	
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n;j++)
+			{
+				
+				cost[i][j]=mx; // 배열 최대값으로 초기화 
+				if(i==j) cost[i][j]=0;
+			}	
+	
+	for(int i=0;i<m;i++)
+	{
+		int a,b,c;
+		cin >> a >> b >> c;//시작 도착 가중치 입력 받기
+		
+		cost[a][b]=c; 
+	} 
+
+	dijkstra(s);
+	
+	for(int i=0;i<n;i++)
+		{
+			if(dist[i]==mx)
+			{
+				printf("%d 번째 원소는 못갑니다 \n");
+				continue;
+			}
+			if(i==s)
+			{
+				
+				continue;
+			}
+			printf( "%d 원소에서 %d 원소 까지 최소 거리는 %d 입니다.\n", s, i,dist[i]);
+		}
+	
+	
+	//printf("%d", distt[s][e]);
+	
+	return 0;
+}
