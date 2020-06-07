@@ -1,0 +1,46 @@
+#include<iostream>
+#include<math.h>
+#include<string.h>
+using namespace std;
+
+string A,P;
+int d,p,a;
+
+int RabinKarp(int n, int m)
+{
+   for(int i=0;i<m;i++)
+   {
+      p+=(pow(d,m-1-i)*(P[i]-'a'));
+      a+=(pow(d,m-1-i)*(A[i]-'a'));
+   }
+   for(int i=0;i<n-m+1;i++)
+   {
+      if(i!=0)
+	  {
+         a=d*(a-(A[i-1]-'a')*pow(d,m-1))+A[i+m-1]-'a';
+      }
+      if(a==p)
+         {
+			 return i;
+		}
+   }
+}
+
+int main()
+{
+	d=5;
+	cin >> P >> A;  // 5진수
+	
+	//printf("%d", d);
+	
+	
+	
+	printf("%d", RabinKarp(A.length(), P.length())+1); 
+	printf("번째 자리에서 문자열과 패턴 일치 ");
+	
+	
+	
+	
+	
+	return 0;
+}
