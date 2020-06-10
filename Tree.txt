@@ -1,0 +1,88 @@
+#include <bits/stdc++.h>
+using namespace std;
+vector<char> node;
+
+char p[30];
+int rank[30];
+void makeset(char x)
+{
+   p[x-'a']=x;
+   rank[x-'a']=0;
+}
+
+char findset(char x)
+{
+   if(x==p[x-'a']) 
+    {
+   		return x;
+	}
+   else return findset(p[x-'a']);
+}
+void Union2(char x,char y)
+{
+   char x1=findset(x);
+   char y1=findset(y);
+   if(rank[x1-'a']>rank[y1-'a'])
+      p[y1-'a']=x1;
+   else{
+      p[x1-'a']=y1;
+      if(rank[x1-'a']==rank[y1-'a']) rank[y1-'a']++;
+   }
+}
+
+int main()
+{
+   
+   node.push_back('a');
+   makeset('a');
+   node.push_back('b');
+   makeset('b');
+   node.push_back('c');
+   makeset('c');
+   node.push_back('h');
+   makeset('h');
+   node.push_back('d');
+   makeset('d');
+   node.push_back('e');
+   makeset('e');
+   node.push_back('f');
+   makeset('f');
+   node.push_back('m');
+   makeset('m');
+   node.push_back('k');
+   makeset('k');
+
+   
+   Union2('a','b');
+   Union2('h','c');
+   Union2('b','c');
+   //그림1 트리 
+   
+   Union2('m','f');
+   Union2('f','k');
+   Union2('d','e');
+   Union2('f','e');
+   //그림 2 트리 
+
+     cout <<"\n------ Union 이전의  Tree-------\n" ;
+      cout << "\n"; 
+   for(int i=0;i<node.size();i++)
+   {
+      cout<<"노드 이름 "<<node[i]<<"\n";
+      cout<<"부모노드 :"<<findset(node[i])<<" 랭크 :"<<rank[node[i]-'a']<<"\n";
+      cout << "\n";
+   }
+   //그림 1 트리와 그림 2 트리 Union2 하기 
+   
+   cout <<"\n------ Union 이후의 Tree-------\n" ;
+   cout << "\n"; 
+   
+   Union2('c','e'); 
+   for(int i=0;i<node.size();i++)
+   {
+      cout<<"노드 이름 "<<node[i]<<"\n";
+      cout<<"부모노드 :"<<findset(node[i])<<" 랭크 :"<<rank[node[i]-'a']<<"\n";
+      cout << "\n";
+   }
+   return 0;
+}
